@@ -1,3 +1,5 @@
+using api.Dtos.Comment;
+using api.Mappers;
 using api.Models;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -29,15 +31,16 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Comment>> Post([FromBody] Comment comment)
+        public async Task<ActionResult<Comment>> Post([FromBody] CreateCommentDto commentDto)
         {
-            Console.WriteLine("Stock id is!", comment.StockId);
-            if (comment.StockId == string.Empty)
+
+            var commentModel = commentDto.ToCommentFromCreate(commentDto.StockId);
+            if (commentModel.StockId == string.Empty)
             {
                 return BadRequest("StockId is required");
             }
-            await _commentServie.CreateCommentAsync(comment);
-            return CreatedAtAction(nameof(Get), new { id = comment.Id }, comment);
+            await _commentServie.CreateCommentAsync(commentModel);
+            return CreatedAtAction(nameof(Get), new { id = commentModel.Id }, commentModel.ToCommentDto());
         }
 
         [HttpPut("{id:length(24)}")]

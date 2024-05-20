@@ -1,3 +1,5 @@
+using api.Dtos.Stock;
+using api.Mappers;
 using api.Models;
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -29,10 +31,11 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Stock>> Post([FromBody] Stock stock)
+        public async Task<ActionResult<Stock>> Post([FromBody] CreateStockRequestDto stockDto)
         {
-            await _stockService.CreateStockAsync(stock);
-            return CreatedAtAction(nameof(Get), new { id = stock.Id }, stock);
+            var stockModel = stockDto.ToStockFromCreateDTO();
+            await _stockService.CreateStockAsync(stockModel);
+            return CreatedAtAction(nameof(Get), new { id = stockModel.Id }, stockModel.ToStockDto());
         }
 
         [HttpPut("{id:length(24)}")]
