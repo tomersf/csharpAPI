@@ -1,0 +1,55 @@
+# Ignore Visual Studio temporary files, build results, and
+# other generated files.
+/bin
+/obj
+/Debug
+/Release
+/appsettings.*.json
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+
+# Visual Studio 2019/2022 cache/options directory
+.vscode
+.vscode/
+
+# Visual Studio Code workspace history
+.vscode/
+
+# Rider
+.idea/
+
+# Rider 2019 directory
+.idea
+
+# Rider 2020.3+ directory
+.idea/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# All log files
+*.log
+
+# Misc
+.env
