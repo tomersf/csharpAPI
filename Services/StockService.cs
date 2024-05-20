@@ -1,4 +1,5 @@
 using api.Data;
+using api.Helpers;
 using api.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -14,14 +15,22 @@ namespace api.Services
             _stockCollection = dbContext.StockCollection;
         }
 
-        public async Task<List<Stock>> GetStocksAsync()
+        public async Task<List<Stock>> GetStocksAsync(QueryObject query)
         {
-            var pipeline = new[]
+            var pipeline = new List<BsonDocument>
+                            {
+                                buildCommentLookupDoc()
+                            };
+
+            if (!string.IsNullOrWhiteSpace(query.CompanyName))
             {
-                buildCommentLookupDoc()
-            };
+                var matchStage = new BsonDocument("$match", new BsonDocument("companyname", query.CompanyName));
+                pipeline.Insert(0, matchStage);
+            }
+
             return await _stockCollection.Aggregate<Stock>(pipeline).ToListAsync();
         }
+
 
         public async Task<Stock> GetStockAsync(string id)
         {

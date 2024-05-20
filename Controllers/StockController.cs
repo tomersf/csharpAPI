@@ -1,4 +1,5 @@
 using api.Dtos.Stock;
+using api.Helpers;
 using api.Mappers;
 using api.Models;
 using api.Services;
@@ -17,7 +18,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Stock>> Get() => await _stockService.GetStocksAsync();
+        public async Task<List<Stock>> Get([FromQuery] QueryObject query) => await _stockService.GetStocksAsync(query);
 
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Stock>> Get(string id)
