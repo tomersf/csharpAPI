@@ -2,6 +2,7 @@ using api.Dtos.Comment;
 using api.Mappers;
 using api.Models;
 using api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -16,6 +17,7 @@ namespace api.Controllers
             _commentServie = commentService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<List<Comment>> Get() => await _commentServie.GetCommentsAsync();
 

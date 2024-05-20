@@ -10,6 +10,7 @@ namespace api.Data
 
         private readonly IMongoCollection<Stock> _stockCollection;
         private readonly IMongoCollection<Comment> _commentCollection;
+        private readonly IMongoCollection<User> _userCollection;
 
         public ApplicationDBContext(DatabaseSettings settings)
         {
@@ -17,10 +18,12 @@ namespace api.Data
             var mongoDb = mongoClient.GetDatabase(settings.DatabaseName);
             _stockCollection = mongoDb.GetCollection<Stock>(settings.StockCollectionName);
             _commentCollection = mongoDb.GetCollection<Comment>(settings.CommentCollectionName);
+            _userCollection = mongoDb.GetCollection<User>(settings.UserCollectionName);
         }
 
         public IMongoCollection<Stock> StockCollection => _stockCollection;
         public IMongoCollection<Comment> CommentCollection => _commentCollection;
+        public IMongoCollection<User> UserCollection => _userCollection;
 
     }
 }
