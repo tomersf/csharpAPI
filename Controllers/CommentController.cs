@@ -17,7 +17,6 @@ namespace api.Controllers
             _commentServie = commentService;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<List<Comment>> Get() => await _commentServie.GetCommentsAsync();
 

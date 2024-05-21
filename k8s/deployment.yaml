@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: apibackend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: apibackend
+    spec:
+      containers:
+      - name: apibackend
+        image: tomersf/csharp
+        ports:
+        - containerPort: 8080
+        env:
+        - name: STOCK_COLLECTION_NAME
+          value: stocks
+        - name: COMMENT_COLLECTION_NAME
+          value: comments
+        - name: USER_COLLECTION_NAME
+          value: users
+        - name: DATABASE_NAME
+          value: abraDB
+        - name: CONNECTION_STRING
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: CONNECTION_STRING
+        - name: JWT_KEY
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: JWT_KEY
+  selector:
+    matchLabels:
+      app: apibackend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apibackend
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 32001
+  selector:
+    app: apibackend
