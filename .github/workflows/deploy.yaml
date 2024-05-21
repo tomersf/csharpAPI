@@ -36,7 +36,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: tomersf/testAPI:latest
+        tags: tomersf/testapi:latest
 
     - name: SSH to VM and deploy
       uses: appleboy/ssh-action@v0.1.8
@@ -45,8 +45,8 @@ jobs:
         username: ${{ secrets.VM_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          docker stop testAPI || true
-          docker rm testAPI || true
-          docker rmi testAPI || true
-          docker pull tomersf/testAPI:latest
-          docker run -d --name testAPI -p 80:8080 tomersf/testAPI:latest
+          docker stop testapi || true
+          docker rm testapi || true
+          docker rmi testapi || true
+          docker pull tomersf/testapi:latest
+          docker run -d --name testapi -p 80:8080 tomersf/testapi:latest
